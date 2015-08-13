@@ -13,7 +13,8 @@ cat("Checking status of required packages and reference genomes...\n")
 if (length(intersect(reqLibs,installed.packages()[,1])) < 3) {
   cat("Installing genomes and required packages...\n")
   #cat("If this is the first time you are using me, it might take a while to load all the stuff. We are working with genomes after all...")
-  biocLite(setdiff(reqLibs,as.character(installed.packages()$Package)))
+  aaa = installed.packages()
+  biocLite(setdiff(reqLibs,as.character(aaa[,1])))
 }
 
 cat("Required packages ready.\n\nPipeline ready to run.\n")
