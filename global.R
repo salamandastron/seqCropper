@@ -58,19 +58,20 @@ reactiveVal <- reactiveValues(currmart=useMart("ensembl", dataset = 'hsapiens_ge
 # mart = useMart("ensembl", dataset = ds)
 
 getExon <- function(gene,exon.num,mart,idtype) {
-  gb <- getBM(attributes=c('ensembl_gene_id','ensembl_exon_id',
+  gb <- getBM(attributes=c('ensembl_gene_id','ensembl_exon_id','rank',
                            "exon_chrom_start","exon_chrom_end","gene_exon","strand"),
               filters = idtype, values=gene, mart=mart,
               bmHeader=TRUE)
-  strandSign <- as.character(gb$Strand[1])
-  if (strandSign == "1") {
-    seqPos <- gb$`Exon Chr Start (bp)`
-    exonOrder <- order(seqPos,decreasing = F)
-  } else {
-    seqPos <- gb$`Exon Chr End (bp)`
-    exonOrder <- order(seqPos,decreasing = T)
-  }
-  exonSeq <- gb$`Exon sequences`[exonOrder[exon.num]]
+  #gb <- gb[grep("ENSE",gb$`Ensembl Exon ID`),]
+#   strandSign <- as.character(gb$Strand[1])
+#   if (strandSign == "1") {
+#     seqPos <- gb$`Exon Chr Start (bp)`
+#     exonOrder <- order(seqPos,decreasing = F)
+#   } else {
+#     seqPos <- gb$`Exon Chr End (bp)`
+#     exonOrder <- order(seqPos,decreasing = T)
+#   }
+  exonSeq <- gb$`Exon sequences`[gb$`Exon Rank in Transcript`==exon.num]
 }
 
 getTSS <- function(gene,earliest=T,mart,idtype) {
