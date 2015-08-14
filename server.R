@@ -5,15 +5,23 @@ shinyServer(
       if (input$var=="Human - GRCh38/hg38") {
         reactiveVal$currmart <- useMart("ensembl", dataset = 'hsapiens_gene_ensembl')
         reactiveVal$idtype <- "hgnc_symbol"
+        reactiveVal$species <- "Human"
         #getPromoter(input$text,as.numeric(input$upWindow),mart,idtype)
       } else if (input$var=="Mouse - GRCm38/mm10") {
         reactiveVal$currmart <- useMart("ensembl", dataset = 'mmusculus_gene_ensembl')
         reactiveVal$idtype <- "mgi_symbol"
+        reactiveVal$species <- "Mouse"
         #getPromoter(input$text,as.numeric(input$upWindow),mart,idtype)
       } else {
         message("Species not supported...")
       }
       input$var
+    })
+    geneInput.draw <- eventReactive({
+      input$submitDraw
+    }, 
+    {
+      drawGene(input$text,reactiveVal$currmart,reactiveVal$species,reactiveVal$idtype)
     })
     geneInput.prom <- eventReactive({
       input$submit
@@ -59,6 +67,9 @@ shinyServer(
     })
     output$genePosTable <- renderDataTable(({
       cbind.data.frame(geneInput.TSS())
+    }))
+    output$geneModel <- renderPlot(({
+      geneInput.draw()
     }))
     observe({
       if(is.null(input$send) || input$send==0) return(NULL)
