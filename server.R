@@ -60,5 +60,19 @@ shinyServer(
     output$genePosTable <- renderDataTable(({
       cbind.data.frame(geneInput.TSS())
     }))
+    observe({
+      if(is.null(input$send) || input$send==0) return(NULL)
+      #from <- isolate(input$from)
+      #to <- isolate(input$to)
+      #subject <- isolate(input$subject)
+      msg <- isolate(input$message)
+      temp <- send.mail(from = "ylhemann@gmail.com",
+                to = "ylhemann@gmail.com",
+                subject = "seqCropper Feedback",
+                body = msg,
+                smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "ylhemann", passwd = "mouse!!!", ssl = TRUE),
+                authenticate = TRUE,
+                send = TRUE)
+    })
   }
 )

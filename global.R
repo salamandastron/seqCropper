@@ -1,6 +1,6 @@
 source("http://bioconductor.org/biocLite.R")
 biocLite()
-reqLibs <- c("ChIPpeakAnno","biomaRt","BSgenome"
+reqLibs <- c("ChIPpeakAnno","biomaRt","BSgenome","XML","mailR"
              #              ,"BSgenome.Hsapiens.NCBI.GRCh38",
              #              "BSgenome.Mmusculus.UCSC.mm9",
              #              "BSgenome.Mmusculus.UCSC.mm10",
@@ -10,7 +10,7 @@ reqLibs <- c("ChIPpeakAnno","biomaRt","BSgenome"
 
 cat("Checking status of required packages and reference genomes...\n")
 
-if (length(intersect(reqLibs,installed.packages()[,1])) < 3) {
+if (length(intersect(reqLibs,installed.packages()[,1])) < 5) {
   cat("Installing genomes and required packages...\n")
   #cat("If this is the first time you are using me, it might take a while to load all the stuff. We are working with genomes after all...")
   aaa = installed.packages()
@@ -21,6 +21,7 @@ cat("Required packages ready.\n\nPipeline ready to run.\n")
 
 library(ChIPpeakAnno)
 library(biomaRt)
+library(mailR)
 
 # Provisional input options
 # upstreamLen <- 0

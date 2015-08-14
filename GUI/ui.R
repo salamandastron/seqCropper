@@ -37,7 +37,10 @@ shinyUI(fluidPage(
                   tabPanel("Promoter", verbatimTextOutput("promoter")), 
                   tabPanel("Exon", verbatimTextOutput("exon")), 
                   tabPanel("Gene Position", dataTableOutput("genePosTable")),
-                  tabPanel("UTR", verbatimTextOutput("utr"))
+                  tabPanel("UTR", verbatimTextOutput("utr")),
+                  tabPanel("Feedback",
+                           textInput("message", "Your feedback:", value=""),
+                           actionButton("send", "Send feedback"))
       )
       #verbatimTextOutput("text")
       #textOutput("text")
