@@ -68,14 +68,15 @@ getGenePos <- function(gene,mart,idtype) {
                            'chromosome_name','strand'),
               filters=idtype, values=gene, mart=mart)
   strandSign <- as.character(gb$strand[1])
-  gb <- gb[-grep("CHR_",gb$chromosome_name,fixed=T),]
-  chr <- paste0("chr",gb$chromosome_name[1])
-  startPos <- gb$start_position
-  endPos <- gb$end_position
   if (strandSign == "1") {
-    
+    chr <- paste0("chr",gb$chromosome_name[1])
+    startPos <- gb$start_position
+    endPos <- gb$end_position
     strnd <- "+"
   } else {
+    chr <- paste0("chr",gb$chromosome_name[1])
+    startPos <- gb$end_position
+    endPos <- gb$start_position
     strnd <- "-"
   }
   list(chr=chr,start=startPos,end=endPos,strand=strnd)
@@ -86,7 +87,6 @@ getTSS <- function(gene,earliest=T,mart,idtype) {
   gb <- getBM(attributes=c('transcription_start_site',
                            'chromosome_name','strand'),
               filters=idtype, values=gene, mart=mart)
-  gb <- gb[-grep("CHR_",gb$chromosome_name,fixed=T),]
   strandSign <- as.character(gb$strand[1])
   TSSList <- gb$transcription_start_site
   #TESList <- gb$transcription_end_site

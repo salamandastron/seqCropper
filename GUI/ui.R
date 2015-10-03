@@ -11,6 +11,7 @@ shinyUI(fluidPage(
                   selected = "Human - GRCh38/hg38"),
       textInput("text", label = h3("Your favorite gene"), 
                 value = "MYC"),
+      fileInput('genefile', 'or upload a list of gene symbols'),
       actionButton("submitDraw","Draw gene model"),
       helpText("For promoter sequences, enter desired length upstream of TSS:"),
       textInput("upWindow",label="Upstream sequence length",
@@ -35,6 +36,7 @@ shinyUI(fluidPage(
     mainPanel(
       verbatimTextOutput("genome"),
       tabsetPanel(type = "tabs", 
+                  tabPanel("Gene List",tableOutput("genelist")),
                   tabPanel("Promoter", verbatimTextOutput("promoter")), 
                   tabPanel("Exon", verbatimTextOutput("exon")), 
                   tabPanel("Gene Position", dataTableOutput("genePosTable")),

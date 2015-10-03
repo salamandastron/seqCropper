@@ -53,6 +53,16 @@ shinyServer(
 #     output$ds <- renderText({    
 #       setGenome()
 #     })
+    output$genelist <- renderTable({
+     inFile <- input$genefile
+     if (is.null(inFile))
+       return(NULL)
+     dataTable <- read.delim(inFile$datapath,
+                header=F
+                )
+     colnames(dataTable) <- "gene"
+     dataTable
+    })
     output$genome <- renderText({
       paste(setGenome(),collapse="\n")
     })

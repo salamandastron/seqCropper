@@ -124,7 +124,6 @@ getPromoter <- function(gene,upflank,mart,idtype) {
   resSeq$gene_flank
 }
 
-
 getUTR <- function(gene,ori,mart,idtype) {
   if (ori == '5') {
     tag <- '5utr'

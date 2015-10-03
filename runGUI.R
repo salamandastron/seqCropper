@@ -8,5 +8,5 @@
 # devtools::install_github("shiny-incubator", "rstudio")
 library(shiny)
 #library(shinyIncubator)
-setwd("~/Tools/genomics/seqCropper/")
+setwd("~/R/seqCropper/")
 runApp("GUI")
